@@ -33,15 +33,15 @@ macro_rules! __obfwide {
         const _OBFWIDE_LEN: usize = _OBFWIDE_STRING.len();
         const _OBFWIDE_KEYSTREAM: [u16; _OBFWIDE_LEN] =
             $crate::words::keystream::<_OBFWIDE_LEN>($crate::random!(u32, "key", stringify!($s)));
-        #[link_section = ".rdata"]
         static _OBFWIDE_SDATA: [u16; _OBFWIDE_LEN] =
             $crate::words::obfuscate::<_OBFWIDE_LEN>(_OBFWIDE_STRING, &_OBFWIDE_KEYSTREAM);
         $crate::words::deobfuscate::<_OBFWIDE_LEN>(
-            $crate::xref::xref::<
-                _,
-                { $crate::random!(u32, "offset", stringify!($s)) },
-                { $crate::random!(u64, "xref", stringify!($s)) },
-            >(&_OBFWIDE_SDATA),
+            // $crate::xref::xref::<
+            //     _,
+            //     { $crate::random!(u32, "offset", stringify!($s)) },
+            //     { $crate::random!(u64, "xref", stringify!($s)) },
+            // >(&_OBFWIDE_SDATA),
+            &_OBFWIDE_SDATA,
             &_OBFWIDE_KEYSTREAM,
         )
     }};

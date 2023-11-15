@@ -107,15 +107,15 @@ macro_rules! __obfbytes {
         const _OBFBYTES_LEN: usize = _OBFBYTES_STRING.len();
         const _OBFBYTES_KEYSTREAM: [u8; _OBFBYTES_LEN] =
             $crate::bytes::keystream::<_OBFBYTES_LEN>($crate::random!(u32, "key", stringify!($s)));
-        #[link_section = ".rdata"]
         static _OBFBYTES_SDATA: [u8; _OBFBYTES_LEN] =
             $crate::bytes::obfuscate::<_OBFBYTES_LEN>(_OBFBYTES_STRING, &_OBFBYTES_KEYSTREAM);
         $crate::bytes::deobfuscate::<_OBFBYTES_LEN>(
-            $crate::xref::xref::<
-                _,
-                { $crate::random!(u32, "offset", stringify!($s)) },
-                { $crate::random!(u64, "xref", stringify!($s)) },
-            >(&_OBFBYTES_SDATA),
+            // $crate::xref::xref::<
+            //     _,
+            //     { $crate::random!(u32, "offset", stringify!($s)) },
+            //     { $crate::random!(u64, "xref", stringify!($s)) },
+            // >(&_OBFBYTES_SDATA),
+            &_OBFBYTES_SDATA,
             &_OBFBYTES_KEYSTREAM,
         )
     }};
