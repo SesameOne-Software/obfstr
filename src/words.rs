@@ -95,6 +95,7 @@ pub const fn obfuscate<const LEN: usize>(s: &[u16], k: &[u16; LEN]) -> [u16; LEN
 
 /// Deobfuscates the obfuscated input string and given key stream.
 #[inline(always)]
+#[optimize(speed)]
 pub fn deobfuscate<const LEN: usize>(s: &[u16; LEN], k: &[u16; LEN]) -> [u16; LEN] {
     let mut buf = [0u16; LEN];
     let mut i = 0;
